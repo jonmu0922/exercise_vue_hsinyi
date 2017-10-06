@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="exercise">
+        <!-- 1) Show an alert when the Button gets clicked -->
+        <div>
+            <button @click="Alert">Show Alert</button>
+        </div>
+        <!-- 2) Listen to the "keydown" event and store the value in a data property (hint: event.target.value gives you the value) -->
+        <br />
+        <div>
+            @keydown
+            <br />
+            <input type="text" @keydown="Keydown">
+            <p>{{ value }}</p>
+        </div>
+        <!-- 3) Adjust the example from 2) to only fire if the "key down" is the ENTER key -->
+        <div>
+            @enter
+            <br />
+            <input type="text" @keyup.enter="Enter">
+            <p>{{ value }}</p>
+        </div>
+
+        <div>
+            @input
+            <br />
+            <input type="text" @input="input">
+            <p>{{ value }}</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#exercise',
+            data: {
+                value: ''
+            },
+            methods: {
+                Alert() {
+                    alert('alert')
+                },
+                input() {
+                    this.value = event.target.value
+                },
+                Keydown() {
+                    this.value = event.target.value
+                },
+                Enter() {
+                    this.value = event.target.value;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
