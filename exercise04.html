@@ -75,14 +75,19 @@
 
         <!-- 5) Repeat 3) but now with values for styles (instead of class names). Attach the respective styles.  -->
         <div>
-            <input type="text">
-            <div></div>
+            <input type="text" v-model="Class4">
+            <div :style="{'background-color':Class4}">
+                    Class4 = {{Class4}}
+            </div>
         </div>
-        
+
         <!-- 6) Create a simple progress bar with setInterval and style bindings. Start it by hitting the below button. -->
         <div>
             <button v-on:click="startProgress">Start Progress</button>
-            <div></div>
+            <br />
+            <div style="background-color:red" :style="{'width':Width + 'px'}">
+                   &nbsp;
+            </div>
         </div>
     </div>
 
@@ -96,7 +101,9 @@
                 Class2:'class2',
                 Class:'',
                 Class3:'',
-                Class3Switch:''
+                Class3Switch:'',
+                Class4:'',
+                Width:10                
             },
             computed:{
                 SetClass3(){
@@ -114,7 +121,10 @@
                     }, 1000)
                 },
                 startProgress(){
-
+                    let _this = this;
+                    let timer = setInterval(function(){
+                        _this.Width += 5;                        
+                    }, 1000)
                 }
             }
         });
