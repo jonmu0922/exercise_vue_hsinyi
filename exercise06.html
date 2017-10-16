@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 顯示生命值 -->
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div :style="{'width':playHealth + '%'}" class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                        {{playHealth}}
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div :style="{'width':monsterHealth + '%'}" class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                        {{monsterHealth}}                        
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- 開始遊戲後，「控制遊戲操作」才需要顯示，並把「開始遊戲操作」隱藏 -->
+
+
+        <!-- 開始遊戲操作 -->
+        <section v-if="!gameIsRunning" class="row controls">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startGame">START NEW GAME</button>
+            </div>
+        </section>
+        <!-- 控制遊戲操作 -->
+        <section v-if="gameIsRunning" class="row controls">
+            <div class="small-12 columns">
+                <button id="attack" @click="attack">ATTACK</button>
+                <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+                <button id="heal" @click="heal">HEAL</button>
+                <button id="give-up" @click="giveUp">GIVE UP</button>
+            </div>
+        </section>
+        <!--  .player-turn .monster-turn -->
+
+        <!-- 遊戲記錄 -->
+        <section v-if="gameIsRunning" class="row log">
+            <div class="small-12 columns">
+                <ul>
+                    <li>
+
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                playHealth: 100,
+                monsterHealth: 100,
+                gameIsRunning: false,
+                // { isPlayer, text }
+                turn: []
+            },
+            methods: {
+                startGame() {
+                    this.gameIsRunning = true;
+                    this.playHealth = 100;
+                    this.monsterHealth = 100;
+                },
+                attack() {
+                    // Math.max(Math.floor(Math.random() * max + 1), min)
+                    // monster damage max: 10, min: 3
+                    // player damage max: 15, min: 5
+                    //console.log(Math.max(Math.floor(Math.random() * 10 + 1), 3))
+                    this.monsterHealth -= Math.max(Math.floor(Math.random() * 10 + 1), 3)
+                    this.playHealth -= Math.max(Math.floor(Math.random() * 15 + 1), 5);
+                    if(this.monsterHealth < 0 )
+                        this.monsterHealth = 0
+                    if(this.playHealth < 0 )
+                        this.playHealth = 0
+                },
+                specialAttack() {
+                    // monster damage max: 20, min: 10
+                    // player damage max: 15, min: 5
+                    this.monsterHealth -= Math.max(Math.floor(Math.random() * 20 + 1), 10)
+                    this.playHealth -= Math.max(Math.floor(Math.random() * 15 + 1), 5);
+                    if(this.monsterHealth < 0 )
+                        this.monsterHealth = 0
+                    if(this.playHealth < 0 )
+                        this.playHealth = 0
+                },
+                heal() {
+                    // player Health +10
+                    this.playHealth += 10;
+                    if(this.playHealth > 100)
+                        this.playHealth = 100
+                },
+                giveUp() {
+                    this.gameIsRunning = false;
+                    this.playHealth = 100;
+                    this.monsterHealth = 100;
+                }                
+            },
+            watch: {
+                // https://vuejs.org/v2/guide/computed.html
+
+                
+            }
+        })
+
+    </script>
+</body>
+
+</html>
