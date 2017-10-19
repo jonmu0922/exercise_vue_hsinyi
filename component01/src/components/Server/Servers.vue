@@ -17,10 +17,8 @@ export default {
     //}
     props:['Name','Server'],
     methods: {
-        ServerClick(server){
-            //console.log(JSON.stringify(server))
-            this.$bus.$emit('ServerEdit', server)
-            //console.log(this.$bus)
+        ServerClick(server){            
+            this.$bus.$emit('ServerEdit', server)            
         }
     }
     
