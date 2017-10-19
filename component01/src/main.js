@@ -9,11 +9,11 @@ const EventBus = new Vue()
 // attach it to the Vue global object.
 Object.defineProperties(Vue.prototype, {
 	$bus: {
-	  get: function () {
-		return EventBus
-	  }
+		get: function () {
+			return EventBus
+		}
 	}
-  })
+})
 
 
 new Vue({
