@@ -18,6 +18,17 @@
 				<!-- 组件在 vm.currentview 变化时改变！ -->
 			</component>
 		</keep-alive>
+
+		<ul>
+			<!-- <li v-for="(l,index) in List" :key="index">
+				{{l.Name}}
+			</li> -->
+			<li  v-for="(l,index) in List" :key="index">
+				<!-- 不加 native 沒有辦法觸發到 -->
+				<UserDetail :User="l" @click.native="UserClick(index)" ></UserDetail>				
+			</li>
+			
+		</ul>
     </div>
 </template>
 
@@ -28,12 +39,14 @@ import Counter from './components/count.vue'
 import Component1 from './components/Component1.vue'
 import Component2 from './components/Component2.vue'
 import Component3 from './components/Component3.vue'
+import UserDetail from './components/UserDetail.vue'
 
 export default {
   data: function() {
     return {
 		count:0,
-		currentView :'Component1'
+		currentView :'Component1',
+		List:[{Name:'Jon',Age:25},{Name:'Mu',Age:30},{Name:'Eye123',Age:35}]
 	};
   },
   methods: {
@@ -41,13 +54,18 @@ export default {
 		  console.log('parent + 1')
 		  this.count++
 	  },	  
-	  SetCount:function(cnt) {this.count = cnt}
+	  SetCount:function(cnt) {this.count = cnt},
+
+	  UserClick(idx){
+		  console.log('UserClick ' + idx)
+	  }
   },
   components: {
 	  Counter,
 	  Component1,
 	  Component2,
-	  Component3
+	  Component3,
+	  UserDetail
   }
 };
 </script>
